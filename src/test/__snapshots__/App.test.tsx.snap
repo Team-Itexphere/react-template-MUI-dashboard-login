@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders App snapshot 1`] = `
+<div
+  class="App"
+>
+  New MSP Project
+</div>
+`;
+
+exports[`renders learn react link- snapshot 1`] = `
+<div
+  class="App"
+>
+  New MSP Project
+</div>
+`;

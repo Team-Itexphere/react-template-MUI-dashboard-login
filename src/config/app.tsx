@@ -1,0 +1,101 @@
+export interface Config {
+  DEBUG: boolean;
+  DEFAULT_PAGINATION_SIZE: number;
+  API_ENDPOINT: string;
+  DEFAULT_AUTHENTICATED_RESTRICTED_REDIRECT: string;
+  DEFAULT_SESSION_MAX_AGE: number;
+  DATE_TIMEZONE: string;
+  DATE_TIME_FORMAT: string;
+  BYPASS_AUTHENTICATION: boolean;
+  RECENT_SEARCH_SIZE: number;
+  DECIMAL_PLACES: number;
+  NZIA_CARD_LENGTH: number;
+  NZIA_CARD_LENGTH_WITH_SPACES: number;
+  IS_DEV: boolean;
+  DISABLE_CARDLESS_ONBOARDING: boolean;
+  DISABLE_ICEPIC_API_KEY_CREATION: boolean;
+  WALLET_DETAILS_EXPORT_CSV_FILE_NAME: string;
+
+  ONBOARDER_RESET_PASSWORD_REDIRECT: string;
+  MINTER_RESET_PASSWORD_REDIRECT: string;
+  DRAWDOWN_RESET_PASSWORD_REDIRECT: string;
+  TREASURY_RESET_PASSWORD_REDIRECT: string;
+  INSIGHT_RESET_PASSWORD_REDIRECT: string;
+  ADMIN_RESET_PASSWORD_REDIRECT: string;
+  SECURITY_RESET_PASSWORD_REDIRECT: string;
+
+  FORGET_PASSWORD_REDIRECT_NAME?: string;
+  AUTHENTICATOR_APPSTORE_REDIRECT?: string;
+  AUTHENTICATOR_PLAYSTORE_REDIRECT?: string;
+
+  // theme config
+  THEME_ICON: string;
+  THEME_DIGITAL_CURRENCY_NAME: string;
+  THEME_DIGITAL_CURRENCY: string;
+
+  // dev options
+  SQR_INJECTION?: string;
+
+  // ICEPIC
+  ICEPIC_URL: string;
+  ICEPIC_API: string;
+}
+
+const appConfig: Config = {
+  DEBUG: process.env.REACT_APP_DEBUG === 'true',
+  DEFAULT_PAGINATION_SIZE: 20,
+  API_ENDPOINT: process.env.REACT_APP_API_ENDPOINT || '/api/',
+  DEFAULT_AUTHENTICATED_RESTRICTED_REDIRECT: '/',
+  DEFAULT_SESSION_MAX_AGE: 30 * 24 * 60 * 60, // 30 days
+  DATE_TIME_FORMAT: process.env.REACT_APP_DATE_TIME_FORMAT || 'YYYY-MM-DD HH:mm:ss',
+  DATE_TIMEZONE: process.env.REACT_APP_DATE_TIMEZONE || 'America/Nassau',
+  BYPASS_AUTHENTICATION: false,
+  RECENT_SEARCH_SIZE: 5,
+  DECIMAL_PLACES: 2,
+  NZIA_CARD_LENGTH: 12,
+  NZIA_CARD_LENGTH_WITH_SPACES: 14,
+  IS_DEV: false,
+  DISABLE_CARDLESS_ONBOARDING: process.env.REACT_APP_DISABLE_CARDLESS_ONBOARDING === 'true',
+  DISABLE_ICEPIC_API_KEY_CREATION: process.env.REACT_APP_DISABLE_ICEPIC_API_KEY_CREATION === 'false',
+  WALLET_DETAILS_EXPORT_CSV_FILE_NAME: process.env.REACT_APP_WALLET_DETAILS_EXPORT_CSV_FILE_NAME || 'wallet_',
+
+  ONBOARDER_RESET_PASSWORD_REDIRECT: process.env.REACT_APP_ONBOARDER_RESET_PASSWORD_REDIRECT || '#',
+  MINTER_RESET_PASSWORD_REDIRECT: process.env.REACT_APP_MINTER_RESET_PASSWORD_REDIRECT || '#',
+  DRAWDOWN_RESET_PASSWORD_REDIRECT: process.env.REACT_APP_DRAWDOWN_RESET_PASSWORD_REDIRECT || '#',
+  TREASURY_RESET_PASSWORD_REDIRECT: process.env.REACT_APP_TREASURY_RESET_PASSWORD_REDIRECT || '#',
+  INSIGHT_RESET_PASSWORD_REDIRECT: process.env.REACT_APP_INSIGHT_RESET_PASSWORD_REDIRECT || '#',
+  ADMIN_RESET_PASSWORD_REDIRECT: process.env.REACT_APP_ADMIN_RESET_PASSWORD_REDIRECT || '#',
+  SECURITY_RESET_PASSWORD_REDIRECT: process.env.REACT_APP_SECURITY_RESET_PASSWORD_REDIRECT || '#',
+  FORGET_PASSWORD_REDIRECT_NAME: process.env.REACT_APP_FORGET_PASSWORD_REDIRECT_NAME,
+  AUTHENTICATOR_APPSTORE_REDIRECT: process.env.REACT_APP_AUTHENTICATOR_APPSTORE_REDIRECT,
+  AUTHENTICATOR_PLAYSTORE_REDIRECT: process.env.REACT_APP_AUTHENTICATOR_PLAYSTORE_REDIRECT,
+
+  // theme config
+  THEME_ICON: process.env.REACT_APP_THEME_ICON || 'bahamas',
+  THEME_DIGITAL_CURRENCY_NAME: process.env.REACT_APP_THEME_DIGITAL_CURRENCY_NAME || 'SandDollar',
+  THEME_DIGITAL_CURRENCY: process.env.REACT_APP_THEME_DIGITAL_CURRENCY || 'B$',
+
+  // ICEPIC
+  ICEPIC_URL: process.env.REACT_APP_ICEPIC_URL || '/api/',
+  ICEPIC_API: process.env.REACT_APP_ICEPIC_API || '/api/',
+};
+
+if (process.env.NODE_ENV === 'development') {
+  appConfig.IS_DEV = true;
+  // tslint:disable-next-line:no-var-requires
+  const overrideConfig: any = require('./app.dev');
+  overrideConfig.default(appConfig);
+}
+
+export let logo: string = '';
+// tslint:disable: no-var-requires
+switch (appConfig.THEME_ICON) {
+  case 'bahamas':
+    logo = require('../assets/imgs/logo-bahamas.png');
+    break;
+  case 'jamaica':
+    logo = require('../assets/imgs/logo-jamaica.png');
+    break;
+}
+logo = require('../assets/imgs/logo-bahamas.png');
+export default appConfig;
